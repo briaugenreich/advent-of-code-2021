@@ -46,7 +46,7 @@ In this example, there are 7 measurements that are larger than the previous meas
 
 
 
-# :star: --- Part Two --- :stars:
+# :star: --- Part Two --- :star:
 Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
 
 Instead, consider sums of a three-measurement sliding window. Again considering the above example:
