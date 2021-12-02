@@ -1,4 +1,4 @@
-# :star: :star: --- Day 1: Sonar Sweep --- 
+# :star: --- Day 1: Sonar Sweep ---  :star:
 You're minding your own business on a ship at sea when the overboard alarm goes off! You rush to see if you can help. Apparently, one of the Elves tripped and accidentally sent the sleigh keys flying into the ocean!
 
 Before you know it, you're inside a submarine the Elves keep ready for situations like this. It's covered in Christmas lights (because of course it is), and it even has an experimental antenna that should be able to track the keys if you can boost its signal strength high enough; there's a little meter that indicates the antenna's signal strength by displaying 0-50 stars.
@@ -42,11 +42,11 @@ To do this, count the number of times a depth measurement increases from the pre
 ```
 In this example, there are 7 measurements that are larger than the previous measurement.
 
-## How many measurements are larger than the previous measurement? 1532.
+### How many measurements are larger than the previous measurement? 1532.
 
 
 
-# --- Part Two ---
+# :star: --- Part Two --- :stars:
 Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
 
 Instead, consider sums of a three-measurement sliding window. Again considering the above example:
@@ -81,4 +81,30 @@ H: 792 (increased)
 ```
 In this example, there are 5 sums that are larger than the previous sum.
 
-##  Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum? 1571
+###  Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum? 1571
+
+
+# Solution
+
+```python
+def find_increased_depth(depth_arr):
+    count = 0
+    for i in range(1, len(depth_arr)):
+        if depth_arr[i] > depth_arr[i-1]:
+            count+=1
+    return count
+
+def find_incresed_window_depth(depth_arr):
+    count = 0
+    for i in range(len(depth_arr) - 3):
+        first_window = depth_arr[i] + depth_arr[i + 1] + depth_arr[i + 2]
+        second_window = depth_arr[i+1] + depth_arr[i + 2] + depth_arr[i + 3]
+        if second_window > first_window:
+            count+=1
+    return count
+
+with open('input.txt', 'r') as input_file:
+    input = [int(line.strip()) for line in input_file.readlines()]
+    print("Depth increases",find_increased_depth(input), "times." )
+    print("Depth WINDOW increases",find_incresed_window_depth(input), "times." )
+```
