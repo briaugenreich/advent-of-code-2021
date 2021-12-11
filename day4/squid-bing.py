@@ -19,6 +19,7 @@ def calculate_win(board):
     win = None
     if -1 in board:
         indices = [i for i, x in enumerate(board) if x == -1]
+        print(indices)
         if len(indices) >= 5: # need at least 5 vals
             for i in indices: # todo eliminate ones we know cant be true
 
@@ -38,7 +39,6 @@ def calulate_score(board, winning_num):
     scores = [num for num in board if num != -1]
     for s in scores:
         score += s
-    score -= winning_num
 
     print("SCORE:", score, "*", winning_num, "=", score*winning_num)
 
@@ -60,30 +60,43 @@ def play_to_win(nums, boards):
             winning_board = calculate_win(board)
             if winning_board:
                 calulate_score(winning_board, nums[round])
-                return
+                winner  = True
+                break
         round+=1
 
-def play_to_loose(nums, boards):
-    round = 0
 
-    while len(boards) > 1:
-        print(len(boards))
+def play_to_loose(nums, boards):
+    print("plauing to loose")
+    round = 0
+    looser = False
+    while len(boards) > 1 or not looser:
         # todo short cut first 5 rounds
+        board_to_delete = []
         for key, board in boards.items():
             updated_board = play_number(nums[round], board)
             boards[key] = updated_board
             winning_board = calculate_win(board)
             if winning_board:
-                del boards[key]
-                print(len(boards))
-                break
-        round+=1
-    print("LAST BOARD TO WIN....", boards)
-    calulate_score(list(boards.values())[0], nums[round])
+                if len(boards) == 1:
+                    looser = True
+                    print("LAST BOARD TO WIN....", boards)
+                    calulate_score(winning_board, nums[round])
+                    break
+                else:
+                    board_to_delete.append(key)
+        for b in board_to_delete:
+            print("deleting winning boards", b)
+            del boards[b]
 
-with open('test.txt', 'r') as input_file:
+        round+=1
+
+# TODO this is silly duplication .... wayyy overly complex... please simplify bri!!
+with open('input.txt', 'r') as input_file:
     numbers = [int(num) for num in input_file.readline().split(',')]
-    print(numbers)
     boards=define_game_boards(input_file)
     play_to_win(numbers, boards)
+
+with open('input.txt', 'r') as input_file:
+    numbers = [int(num) for num in input_file.readline().split(',')]
+    boards=define_game_boards(input_file)
     play_to_loose(numbers, boards)
