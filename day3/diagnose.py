@@ -58,5 +58,6 @@ def find_life_support_rating(input_arr):
 with open('input.txt', 'r') as input_file:
     input = [line.strip() for line in input_file.readlines()]
 
+# todo can we combine these into one general function 
 find_power_consumption(input)
 find_life_support_rating(input)
