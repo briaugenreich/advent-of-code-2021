@@ -19,7 +19,7 @@ def calculate_win(board):
     win = None
     if -1 in board:
         indices = [i for i, x in enumerate(board) if x == -1]
-        print(indices)
+        # print(indices)
         if len(indices) >= 5: # need at least 5 vals
             for i in indices: # todo eliminate ones we know cant be true
 
@@ -66,7 +66,7 @@ def play_to_win(nums, boards):
 
 
 def play_to_loose(nums, boards):
-    print("plauing to loose")
+    # print("plauing to loose")
     round = 0
     looser = False
     while len(boards) > 1 or not looser:
@@ -79,13 +79,13 @@ def play_to_loose(nums, boards):
             if winning_board:
                 if len(boards) == 1:
                     looser = True
-                    print("LAST BOARD TO WIN....", boards)
+                    # print("LAST BOARD TO WIN....", boards)
                     calulate_score(winning_board, nums[round])
                     break
                 else:
                     board_to_delete.append(key)
         for b in board_to_delete:
-            print("deleting winning boards", b)
+            # print("deleting winning boards", b)
             del boards[b]
 
         round+=1
